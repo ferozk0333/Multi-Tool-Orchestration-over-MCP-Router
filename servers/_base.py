@@ -1,4 +1,4 @@
-"""Builds an MCP server from a slice of the catalogue: schemas, validation, handlers, stdio."""
+"""Builds an MCP server from a slice of the catalogue: schemas, validation, handlers,  stdio."""
 
 from __future__ import annotations
 
