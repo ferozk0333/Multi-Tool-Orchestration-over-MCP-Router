@@ -48,8 +48,7 @@ independently.
 
 **Index to OpenSearch Serverless.** The embeddings are a NumPy matrix loaded into every process,
 which does not survive more than one API instance. A shared vector index fixes that, and moving
-embeddings to Bedrock drops a lot of boilerplate code.
+embeddings to Bedrock drops a lot of boilerplate code. I would also use an ALB behind an API Gateway as entry point, CloudWatch for metrics, logs and alarms, and other scalable services.
 
-**Session state to DynamoDB, credentials to Secrets Manager.** Conversations live in a Python
-dict right now, so a restart loses them and you cannot run two instances. The API would run on
-Fargate behind an ALB, with model calls going to Bedrock so everything stays in one VPC.
+**Evaluations** I plan to evaluate the application more systematically by performing 1) component-level evals (tool correctness, tool argument correctness), 2) pipeline-level evals where all components are tied together and finally 3) application-level evals where I test latency, TTFT, bias, tone etc. I would log the results of each run on an experiment tracking service like MLflow and visualize the metrics of interest.
+
