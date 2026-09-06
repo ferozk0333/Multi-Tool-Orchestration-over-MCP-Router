@@ -1,6 +1,6 @@
 # Multi-Tool Agentic Orchestration over MCP
 
-In this project, I orchestrate 504 tools across 11 custom MCP servers using dense embedding and BM25-based retrieval methods. If you connect a few MCP servers, the tool count outgrows the prompt very quickly. Sending all of them to the model every time is inefficient. In fact, all 504 schemas are approx 60k tokens in context, which leads to latency issues, degraded selection accuracy and even hallucinations. Using the proposed retrieval mechanism, I found that the context window token usage drops from 60k to 1.8k tokens on average for tool schemas.
+In this project, I orchestrate 504 tools across 11 custom MCP servers using dense embedding and BM25-based retrieval. Connect a few MCP servers and the tool count outgrows the prompt very quickly. All 504 schemas are 60k tokens in context, which means higher latency, degraded selection accuracy and hallucinations. With retrieval, that drops to 1.8k tokens per query.
 
 <!-- TODO: screen recording of the trace running goes here, before any prose. -->
 
