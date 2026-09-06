@@ -1,14 +1,14 @@
 # Multi-Tool Agentic Orchestration over MCP
 
-11 MCP servers, 504 tools, and a client that routes over them.
+In this project, I orchestrate 504 tools across 11 custom MCP servers using dense embedding and BM25-based retrieval methods for tool calls. If you connect a few MCP servers, the tool count outgrows the prompt. Sending all of them to the model every time is inefficient. Infact, all 504 schemas are approx 60k tokens in context, which leads to latency issues, degraded selection accuracy and even hallucinations. Using the retrieval mechanism, I found that the context window token usage reduces from 60k to 1.8k tokens for tool schemas.
 
 <!-- TODO: screen recording of the trace running goes here, before any prose. -->
 
-## What it does
+## How It Works
+<img width="686" height="841" alt="Screenshot 2026-09-06 at 1 19 17 PM" src="https://github.com/user-attachments/assets/26264cc6-84f1-4b6b-91dd-45e9022ce523" />
 
-Connect a few MCP servers and you quickly have hundreds of tools. Sending all of them to the
-model every time is wasteful. This retrieves only the dozen tools that match your question and
-sends those.
+The model starts each conversation with zero catalogue tools and two services: `request_more_tools` and `ask_clarification`.
+
 
 **504 tools in the catalogue. 12 go to the model.**
 
@@ -32,41 +32,7 @@ Eleven of those gives 504 tools, which is 59,394 tokens of schemas. It fits in t
 window, but you pay it on every call before the user has asked anything, and the model picks
 from 504 options instead of 12.
 
-## How it works
 
-```
-user message
-     │
-     ▼
-┌──────────────────────────────────────────────────────────┐
-│ AGENT LOOP                              max 10 turns     │
-│                                                          │
-│   ┌────────────────────────────────────────┐             │
-│   │ MODEL                                  │◀─────────┐  │
-│   │ conversation + tools loaded so far     │          │  │
-│   │ + request_more_tools                   │          │  │
-│   │ + ask_clarification                    │          │  │
-│   └────────────────────────────────────────┘          │  │
-│      │           │                   │                │  │
-│  plain answer  ask_clarification  request_more_tools  │  │
-│      │           │                   │                │  │
-│      ▼           ▼                   ▼                │  │
-│   ANSWER   question to user    ┌──────────┐           │  │
-│                                │  ROUTER  │ ~7ms      │  │
-│                                │ 504 → 12 │           │  │
-│                                └──────────┘           │  │
-│                                     │ schemas ────────┘  │
-│      │                                                   │
-│  tool calls                                              │
-│      ▼                                                   │
-│  ┌─────────────────┐                                     │
-│  │ MCP CLIENT POOL │ concurrent, with retries            │
-│  └─────────────────┘                                     │
-│      │ results ───────────────────────────────────────┐  │
-└──────┼────────────────────────────────────────────────┼──┘
-       ▼                                                │
-  11 stdio MCP servers ──────────────────── back to the model
-```
 
 **Router.** Not a model, just a local search index. Dense embeddings with `bge-small-en-v1.5`,
 about 7ms, no API cost.
@@ -147,53 +113,18 @@ from seeded in-memory state.
 220 of the 504 tools are synthetic. The eval set is generated, 60 queries with 25% hand-checked.
 stdio transport only, and conversations are lost on restart.
 
-## Running it
 
-Needs Python 3.10+, Node 18+, and an Anthropic API key.
+## Future Work
 
-```bash
-uv venv --python 3.13 .venv
-uv pip install --python .venv/bin/python -r pyproject.toml
-echo 'ANTHROPIC_API_KEY=sk-ant-...' > .env
+As a follow-up step, I plan to move this project to production using AWS Services.
 
-set -a; . ./.env; set +a
-.venv/bin/python -m server.app          # backend on :8000
-
-cd frontend && npm install && npm run dev   # UI on :5173
-```
-
-First start takes about 10 seconds to spawn 11 subprocesses and embed 504 tools. Embeddings are
-cached after that. Model is `claude-sonnet-5`, a demo run costs a few cents.
-
-```bash
-.venv/bin/python -m pytest tests/ -q      # retrieval unit tests
-.venv/bin/python scripts/smoke_pool.py    # 11 servers, degraded path, reconnect
-.venv/bin/python scripts/smoke_agent.py   # six scenarios, costs API calls
-.venv/bin/python evals/report.py          # recall@12 table
-```
-
-Two queries to try. Simple:
-
-```
-what are the open pull requests on acme/api-server?
-```
-
-Clarification then a four call chain. Answer `acme/api-server` when it asks:
-
-```
-Find my newest open PR, post a one-line summary to the eng channel, then pin
-that message and add an eyes reaction to it.
-```
-
-## What I would do next
-
-**Servers to ECS Fargate over Streamable HTTP.** Eleven local subprocesses is fine for a demo.
-Each server becomes its own Fargate service behind an internal ALB so they scale and fail
+**Servers to ECS Fargate over Streamable HTTP.** 
+Each local MCP server becomes its own Fargate service behind an internal ALB so they scale and fail
 independently. The pool already handles a server going away.
 
 **Index to OpenSearch Serverless.** The embeddings are a numpy matrix loaded into every process,
 which does not survive more than one API instance. A shared vector index fixes that, and moving
-embeddings to Bedrock drops the 900MB torch dependency.
+embeddings to Bedrock drops a lot of boiler plate code.
 
 **Session state to DynamoDB, credentials to Secrets Manager.** Conversations live in a Python
 dict today, so a restart loses them and you cannot run two instances. The API would run on
