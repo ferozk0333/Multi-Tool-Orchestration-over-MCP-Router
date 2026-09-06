@@ -32,7 +32,7 @@ router fetches tools for that.
 
 ## Results
 
-| | |
+| Criteria | Results |
 |---|---|
 | Prompt tokens, 504 schemas vs routed 12 | 59,394 -> 1,822 (**96.9% saved**) |
 | recall@12 on 60 labelled queries | dense **91.7%**, hybrid 85.0%, BM25 70.0% |
