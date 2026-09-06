@@ -1,0 +1,22 @@
+[project]
+name = "mcp-tool-agent-orchestrator"
+version = "0.1.0"
+description = "11 MCP servers exposing 500 tools, and a client that routes over them."
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=2.1.1",
+    "pydantic>=2.0",
+    "anyio>=4.0",
+    "anthropic>=1.4.0",
+    "rank-bm25>=0.2.2",
+    "sentence-transformers>=3.0",
+    "numpy>=2.0",
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+]

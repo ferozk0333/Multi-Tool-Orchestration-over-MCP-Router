@@ -1,0 +1,81 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.github"
+      ]
+    },
+    "stripe": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.stripe"
+      ]
+    },
+    "slack": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.slack"
+      ]
+    },
+    "twilio": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.twilio"
+      ]
+    },
+    "crm": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.crm"
+      ]
+    },
+    "ticketing": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.ticketing"
+      ]
+    },
+    "calendar": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.calendar"
+      ]
+    },
+    "storage": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.storage"
+      ]
+    },
+    "analytics": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.analytics"
+      ]
+    },
+    "hr": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.hr"
+      ]
+    },
+    "inventory": {
+      "command": "python",
+      "args": [
+        "-m",
+        "servers.inventory"
+      ]
+    }
+  }
+}

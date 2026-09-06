@@ -1,0 +1,544 @@
+{
+  "goldens": [
+    {
+      "query": "Update the enterprise team platform-core's notification_setting and description for our acme enterprise.",
+      "expected_key": "github/github_enterprise_teams_update",
+      "service": "github",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Fetch the gitignore template named Python for me.",
+      "expected_key": "github/github_gitignore_get_template",
+      "service": "github",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Update the import on acme/legacy-app with new vcs_username and vcs_password.",
+      "expected_key": "github/github_migrations_update_import",
+      "service": "github",
+      "source": "real",
+      "split": "lexical",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "List projects for the org acme, 50 per_page, with q set to roadmap.",
+      "expected_key": "github/github_projects_list_for_org",
+      "service": "github",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Update our org's hosted compute network configuration to enable failover_network_enabled.",
+      "expected_key": "github/github_hosted_compute_update_network_configuration_for_org",
+      "service": "github",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Show me the default code security configurations for org acme.",
+      "expected_key": "github/github_code_security_get_default_configurations",
+      "service": "github",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "List open secret scanning alerts for org acme, excluding secret types from partner providers.",
+      "expected_key": "github/github_secret_scanning_list_alerts_for_org",
+      "service": "github",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Delete reaction 4455 from commit comment 9912 in acme/webapp.",
+      "expected_key": "github/github_reactions_delete_for_commit_comment",
+      "service": "github",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Delete the Dependabot repository secret NPM_TOKEN from acme/webapp.",
+      "expected_key": "github/github_dependabot_delete_repo_secret",
+      "service": "github",
+      "source": "real",
+      "split": "lexical",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "Get the classroom assignment with assignment_id 30821 for me.",
+      "expected_key": "github/github_classroom_get_an_assignment",
+      "service": "github",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Get rid of the stored Python analysis database for my repo octo-org/webapp.",
+      "expected_key": "github/github_code_scanning_delete_codeql_database",
+      "service": "github",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": "leak: paraphrase query retains enough lexical overlap that BM25 ranks it 1st"
+    },
+    {
+      "query": "Make a new branch pointer in my repo pointing at commit abc123.",
+      "expected_key": "github/github_git_create_ref",
+      "service": "github",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "Stop repo 4821 from being able to use our org's dev container secret.",
+      "expected_key": "github/github_codespaces_remove_selected_repo_from_org_secret",
+      "service": "github",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Find GitHub accounts matching the name Torvalds, sorted by followers.",
+      "expected_key": "github/github_search_users",
+      "service": "github",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "Turn this README text into HTML the way GitHub would display it.",
+      "expected_key": "github/github_markdown_render",
+      "service": "github",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "File a draft vulnerability disclosure on my project for that XSS bug.",
+      "expected_key": "github/github_security_advisories_create_repository_advisory",
+      "service": "github",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Show me all the private projects I own or collaborate on.",
+      "expected_key": "github/github_repos_list_for_authenticated_user",
+      "service": "github",
+      "source": "real_additive",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Set up a new group across our whole enterprise called Platform Engineering.",
+      "expected_key": "github/github_enterprise_teams_create",
+      "service": "github",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": true,
+      "flag": "leak: paraphrase query retains enough lexical overlap that BM25 ranks it 1st"
+    },
+    {
+      "query": "Which dated versions of the GitHub API can I target in requests?",
+      "expected_key": "github/github_meta_get_all_versions",
+      "service": "github",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Check the status of background job 917 running in acme/backend.",
+      "expected_key": "github/github_agent_tasks_get_task_by_repo_and_id",
+      "service": "github",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Check the Do Not Disturb status for user U024BE7LH right now.",
+      "expected_key": "slack/slack_dnd_info",
+      "service": "slack",
+      "source": "real",
+      "split": "lexical",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "List all the scopes our app currently has on this team.",
+      "expected_key": "slack/slack_apps_permissions_scopes_list",
+      "service": "slack",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Remove the remote file with external_id doc-4821 from Slack.",
+      "expected_key": "slack/slack_files_remote_remove",
+      "service": "slack",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Add a custom unfurl for the URL in that message at ts 1502210682.580145.",
+      "expected_key": "slack/slack_chat_unfurl",
+      "service": "slack",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Show me the full list of custom emoji for our team.",
+      "expected_key": "slack/slack_emoji_list",
+      "service": "slack",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Uninstall our app from the workspace using our client_id and client_secret.",
+      "expected_key": "slack/slack_apps_uninstall",
+      "service": "slack",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Pull page 2 of the team access logs, 100 entries per page.",
+      "expected_key": "slack/slack_team_access_logs",
+      "service": "slack",
+      "source": "real",
+      "split": "lexical",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "Post a message to #general with blocks and icon_emoji set to rocket.",
+      "expected_key": "slack/slack_chat_post_message",
+      "service": "slack",
+      "source": "real_additive",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Can you look up details about the automated assistant account posting in our channel?",
+      "expected_key": "slack/slack_bots_info",
+      "service": "slack",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Pop up a dialog box for the teammate who just clicked my shortcut.",
+      "expected_key": "slack/slack_views_open",
+      "service": "slack",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": "ambiguous: query says \"dialog box\"; slack_dialog_open answers it at least as well"
+    },
+    {
+      "query": "Stick that release announcement to the top of the engineering channel.",
+      "expected_key": "slack/slack_pins_add",
+      "service": "slack",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Tell Slack my app finished its part of the automation and hand back the results.",
+      "expected_key": "slack/slack_workflows_step_completed",
+      "service": "slack",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Is Priya online right now or away?",
+      "expected_key": "slack/slack_users_get_presence",
+      "service": "slack",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Grab me a shareable link to that specific message so I can email it.",
+      "expected_key": "slack/slack_chat_get_permalink",
+      "service": "slack",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "The video meeting is over, close it out and log how long it ran.",
+      "expected_key": "slack/slack_calls_end",
+      "service": "slack",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Set up a new mention group for the design team with a handle.",
+      "expected_key": "slack/slack_usergroups_create",
+      "service": "slack",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": "leak: paraphrase query retains enough lexical overlap that BM25 ranks it 1st"
+    },
+    {
+      "query": "List my payment method domains where domain_name is checkout.acme.com and enabled is true",
+      "expected_key": "stripe/stripe_get_payment_method_domains",
+      "service": "stripe",
+      "source": "real",
+      "split": "lexical",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "Create a billing feedback option with description Too expensive for my plan",
+      "expected_key": "stripe/stripe_post_billing_feedback_options",
+      "service": "stripe",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Can you pull up the details for that one specific payout entry in my account ledger?",
+      "expected_key": "stripe/stripe_get_balance_history_id",
+      "service": "stripe",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Show me which products the customer actually bought during that abandoned payment page visit.",
+      "expected_key": "stripe/stripe_get_checkout_sessions_session_line_items",
+      "service": "stripe",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "List the SIP auth calls credential list mappings for DomainSid SD123, 50 per page.",
+      "expected_key": "twilio/twilio_list_sip_auth_calls_credential_list_mapping",
+      "service": "twilio",
+      "source": "real",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Change the display name and permissions for a chat member in my messaging app.",
+      "expected_key": "twilio/twilio_update_service_user",
+      "service": "twilio",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "End the live audio stream being forwarded to my recording vendor on this call.",
+      "expected_key": "twilio/twilio_update_siprec",
+      "service": "twilio",
+      "source": "real",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "List all opportunities in the negotiation stage with a close_date this month.",
+      "expected_key": "crm/crm_list_opportunities",
+      "service": "crm",
+      "source": "synthetic",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Show me all call activities for account_id 4471 in the last date_range of 30 days.",
+      "expected_key": "crm/crm_list_account_activities",
+      "service": "crm",
+      "source": "synthetic",
+      "split": "lexical",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "Can you pull up the phone number and email for customer record 48213?",
+      "expected_key": "crm/crm_fetch_contact_info",
+      "service": "crm",
+      "source": "synthetic",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Pull up queue details for queue_id 4471 with include_tickets set to true.",
+      "expected_key": "ticketing/ticketing_get_queue_details",
+      "service": "ticketing",
+      "source": "synthetic",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Please get rid of case 4471 entirely, we opened it by mistake.",
+      "expected_key": "ticketing/ticketing_delete_ticket",
+      "service": "ticketing",
+      "source": "synthetic",
+      "split": "paraphrase",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "I want to give case 8820 five stars and say the agent was great.",
+      "expected_key": "ticketing/ticketing_rate_ticket_satisfaction",
+      "service": "ticketing",
+      "source": "synthetic",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "List all events for user_id jchen between start_date March 1 and end_date March 15.",
+      "expected_key": "calendar/calendar_list_user_events",
+      "service": "calendar",
+      "source": "synthetic",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Check availability for user_ids maya and devon from start_time 2pm to end_time 3pm Thursday.",
+      "expected_key": "calendar/calendar_check_availability",
+      "service": "calendar",
+      "source": "synthetic",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Take back the invite I sent Dana for Thursday's planning session.",
+      "expected_key": "calendar/calendar_cancel_invitation",
+      "service": "calendar",
+      "source": "synthetic",
+      "split": "paraphrase",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "Delete the lifecycle rule with rule_id archive-30d from bucket backups-prod.",
+      "expected_key": "storage/storage_delete_lifecycle_rule",
+      "service": "storage",
+      "source": "synthetic",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Can you show me all the file containers I have in my cloud storage account?",
+      "expected_key": "storage/storage_list_buckets",
+      "service": "storage",
+      "source": "synthetic",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Delete funnel_id checkout-v2 with confirm set to true, please.",
+      "expected_key": "analytics/analytics_delete_funnel",
+      "service": "analytics",
+      "source": "synthetic",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Show me everything users did in our mobile app between March 1 and March 15.",
+      "expected_key": "analytics/analytics_list_events",
+      "service": "analytics",
+      "source": "synthetic",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Update onboarding task ONB-4471 to status completed and push due_date to Friday.",
+      "expected_key": "hr/hr_update_onboarding_task",
+      "service": "hr",
+      "source": "synthetic",
+      "split": "lexical",
+      "checked": false,
+      "flag": null
+    },
+    {
+      "query": "Can you show me how our company's teams and reporting lines are arranged?",
+      "expected_key": "hr/hr_get_org_structure",
+      "service": "hr",
+      "source": "synthetic",
+      "split": "paraphrase",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "Run inventory_delete_supplier for supplier_id SUP-4821 with confirm set to true.",
+      "expected_key": "inventory/inventory_delete_supplier",
+      "service": "inventory",
+      "source": "synthetic",
+      "split": "lexical",
+      "checked": true,
+      "flag": null
+    },
+    {
+      "query": "Which storage facilities do we have running in the Midwest right now?",
+      "expected_key": "inventory/inventory_list_warehouses",
+      "service": "inventory",
+      "source": "synthetic",
+      "split": "paraphrase",
+      "checked": false,
+      "flag": null
+    }
+  ]
+}

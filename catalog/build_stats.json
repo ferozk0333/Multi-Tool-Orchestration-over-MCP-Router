@@ -1,0 +1,118 @@
+{
+  "real": {
+    "per_service": {
+      "github": {
+        "operations_in_specs": 1225,
+        "operations_with_usable_text": 1225,
+        "usable_after_drops": 1225,
+        "sampled": 120,
+        "strata_available": 47,
+        "strata_sampled": 47
+      },
+      "slack": {
+        "operations_in_specs": 174,
+        "operations_with_usable_text": 174,
+        "usable_after_drops": 174,
+        "sampled": 40,
+        "strata_available": 25,
+        "strata_sampled": 25
+      },
+      "stripe": {
+        "operations_in_specs": 594,
+        "operations_with_usable_text": 589,
+        "usable_after_drops": 589,
+        "sampled": 80,
+        "strata_available": 76,
+        "strata_sampled": 76
+      },
+      "twilio": {
+        "operations_in_specs": 415,
+        "operations_with_usable_text": 313,
+        "usable_after_drops": 309,
+        "sampled": 40,
+        "strata_available": 86,
+        "strata_sampled": 40
+      }
+    },
+    "drops": {
+      "github": {
+        "not_sampled": 1105
+      },
+      "slack": {
+        "not_sampled": 134
+      },
+      "stripe": {
+        "no_description": 5,
+        "not_sampled": 509
+      },
+      "twilio": {
+        "no_description": 102,
+        "duplicate_name": 4,
+        "not_sampled": 269
+      }
+    },
+    "parameter_lists_truncated": {
+      "github": 6,
+      "slack": 0,
+      "stripe": 19,
+      "twilio": 8
+    }
+  },
+  "synthetic": {
+    "batches": 22,
+    "rejected_duplicate_name": 0,
+    "rejected_empty_description": 0,
+    "rejected_no_parameters": 0,
+    "model": "gpt-4o",
+    "batch_size": 12
+  },
+  "additive": {
+    "reason": "the stratified sample skipped the list-pull-requests and post-message operations the demo scenarios need",
+    "specs": {
+      "github": {
+        "repo": "github/rest-api-description",
+        "commit": "3cef12e8a02d612ad032473d4fb87266f2befeae",
+        "spec_path": "descriptions/api.github.com/api.github.com.json",
+        "sha256": "531b05749a9f86c7be01330e6d89d052fd3102ff31df4e0c765d9550b11bbad8"
+      },
+      "slack": {
+        "repo": "slackapi/slack-api-specs",
+        "commit": "bc08db49625630e3585bf2f1322128ea04f2a7f3",
+        "spec_path": "web-api/slack_web_openapi_v2.json",
+        "sha256": "742a5c977180a829df8767cf57bc417d99b3713583aee83741efb9c08ca731e7"
+      }
+    },
+    "tools": [
+      {
+        "name": "github_repos_list_for_authenticated_user",
+        "service": "github",
+        "operation_id": "repos/list-for-authenticated-user",
+        "why": "scenario 1 says 'my' pull requests, so the repo has to be discoverable"
+      },
+      {
+        "name": "github_pulls_list",
+        "service": "github",
+        "operation_id": "pulls/list",
+        "why": "scenario 1's answer, and the first half of scenario 2"
+      },
+      {
+        "name": "slack_chat_post_message",
+        "service": "slack",
+        "operation_id": "chat_postMessage",
+        "why": "scenario 2's second call, the one that changes Slack world state"
+      },
+      {
+        "name": "slack_conversations_history",
+        "service": "slack",
+        "operation_id": "conversations_history",
+        "why": "reads the posted message back, which is how scenario 2 is proved"
+      }
+    ]
+  },
+  "totals": {
+    "real": 280,
+    "synthetic": 220,
+    "real_additive": 4,
+    "total": 504
+  }
+}
