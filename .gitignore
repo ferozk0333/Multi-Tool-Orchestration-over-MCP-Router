@@ -12,14 +12,7 @@ __pycache__/
 node_modules/
 frontend/dist/
 
-# generated / downloaded, rebuilt on first run
+# generated / downloaded
 .cache/
 catalog/specs/
 
-# working notes, not part of the public repo
-ARCHITECTURE.md
-CLAUDE.md
-FINDINGS.md
-RETRIEVAL.md
-README_OUTLINE.md
-*.tsbuildinfo
