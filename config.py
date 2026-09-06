@@ -1,4 +1,3 @@
-"""All tunables. Plain constants, no YAML, no file I/O."""
 
 from __future__ import annotations
 
