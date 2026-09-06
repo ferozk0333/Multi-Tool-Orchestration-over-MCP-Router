@@ -43,12 +43,12 @@ As a follow-up step, I plan to move this project to production using AWS Service
 
 **Servers to ECS Fargate over Streamable HTTP.** 
 Each local MCP server becomes its own Fargate service behind an internal ALB so they scale and fail
-independently. The pool already handles a server going away.
+independently.
 
-**Index to OpenSearch Serverless.** The embeddings are a numpy matrix loaded into every process,
+**Index to OpenSearch Serverless.** The embeddings are a NumPy matrix loaded into every process,
 which does not survive more than one API instance. A shared vector index fixes that, and moving
-embeddings to Bedrock drops a lot of boiler plate code.
+embeddings to Bedrock drops a lot of boilerplate code.
 
 **Session state to DynamoDB, credentials to Secrets Manager.** Conversations live in a Python
-dict today, so a restart loses them and you cannot run two instances. The API would run on
+dict right now, so a restart loses them and you cannot run two instances. The API would run on
 Fargate behind an ALB, with model calls going to Bedrock so everything stays in one VPC.
