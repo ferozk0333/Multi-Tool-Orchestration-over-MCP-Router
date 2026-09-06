@@ -9,12 +9,6 @@ The model starts each conversation with zero catalogue tools, plus two system to
 
 From there, every turn is the same decision:
 
-model </br>
- ├─ need tools?      -> router retrieves top 12 -> back to the model </br>
- ├─ need info?       -> ask the user -> wait </br>
- ├─ ready to act?    -> call tools -> results back to the model </br>
- └─ done?            -> answer </br>
-
 <img width="686" height="841" alt="Screenshot 2026-09-06 at 1 19 17 PM" src="https://github.com/user-attachments/assets/26264cc6-84f1-4b6b-91dd-45e9022ce523" />
 
 
