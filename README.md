@@ -9,7 +9,7 @@ The model starts each conversation with zero catalogue tools, plus two system to
 
 From there, every turn is the same decision:
 
-<img width="500" height="600" alt="Screenshot 2026-09-06 at 2 45 37 PM" src="https://github.com/user-attachments/assets/578d86ce-6963-40ce-be97-445a11a82d0a" />
+<img width="550" height="620" alt="Screenshot 2026-09-06 at 2 45 37 PM" src="https://github.com/user-attachments/assets/578d86ce-6963-40ce-be97-445a11a82d0a" />
 
 
 
@@ -50,5 +50,5 @@ independently.
 which does not survive more than one API instance. A shared vector index fixes that, and moving
 embeddings to Bedrock drops a lot of boilerplate code. I would also use an ALB behind an API Gateway as entry point, CloudWatch for metrics, logs and alarms, and other scalable services.
 
-**Evaluations** I plan to evaluate the application more systematically by performing 1) component-level evals (tool correctness, tool argument correctness), 2) pipeline-level evals where all components are tied together and finally 3) application-level evals where I test latency, TTFT, bias, tone etc. I would log the results of each run on an experiment tracking service like MLflow and visualize the metrics of interest.
+**Evaluations.** I plan to evaluate the application more systematically by performing 1) component-level evals (tool correctness, tool argument correctness), 2) pipeline-level evals where all components are tied together and finally 3) application-level evals where I test latency, TTFT, bias, tone etc. I would log the results of each run on an experiment tracking service like MLflow and visualize the metrics of interest.
 
