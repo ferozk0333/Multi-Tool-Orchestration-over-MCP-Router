@@ -9,7 +9,8 @@ The model starts each conversation with zero catalogue tools, plus two system to
 
 From there, every turn is the same decision:
 
-<img width="686" height="841" alt="Screenshot 2026-09-06 at 1 19 17 PM" src="https://github.com/user-attachments/assets/26264cc6-84f1-4b6b-91dd-45e9022ce523" />
+<img width="400" height="600" alt="Screenshot 2026-09-06 at 2 45 37 PM" src="https://github.com/user-attachments/assets/578d86ce-6963-40ce-be97-445a11a82d0a" />
+
 
 
 ## Key Components
