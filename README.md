@@ -9,11 +9,11 @@ The model starts each conversation with zero catalogue tools, plus two system to
 
 From there, every turn is the same decision:
 
-model
- ├─ need tools?      -> router retrieves top 12 -> back to the model
- ├─ need info?       -> ask the user -> wait
- ├─ ready to act?    -> call tools -> results back to the model
- └─ done?            -> answer
+model </br>
+ ├─ need tools?      -> router retrieves top 12 -> back to the model </br>
+ ├─ need info?       -> ask the user -> wait </br>
+ ├─ ready to act?    -> call tools -> results back to the model </br>
+ └─ done?            -> answer </br>
 
 <img width="686" height="841" alt="Screenshot 2026-09-06 at 1 19 17 PM" src="https://github.com/user-attachments/assets/26264cc6-84f1-4b6b-91dd-45e9022ce523" />
 
@@ -32,30 +32,16 @@ router fetches tools for that.
 
 - **Conditional retries.** Timeouts retry, validation errors do not, since they fail the same way
   every time.
-- **Iteration cap.** At 10 turns it stops and answers from what it gathered, and says it was cut
-  short. Never an error page.
-- **Errors are data.** A failed call goes back to the model as a tool result, not an exception.
-- **Bounded concurrency.** Independent calls in one turn run together, capped at 5.
-- **A server dying does not kill the app.** It is marked unavailable, its tools drop out of the
-  index, and a background task retries it.
-- **Failure injection.** Some tools are set to time out or reject arguments, so the retry paths
-  actually run instead of being assumed.
+- **Iteration cap.** At 10 turns it stops and answers from what it gathered.
+- **Concurrency.** Independent calls in one turn run together, capped at 5.
 
-## Numbers
+## Results
 
 | | |
 |---|---|
-| Prompt tokens, 504 schemas vs routed 12 | 59,394 → 1,822 (**96.9% saved**) |
+| Prompt tokens, 504 schemas vs routed 12 | 59,394 -> 1,822 (**96.9% saved**) |
 | recall@12 on 60 labelled queries | dense **91.7%**, hybrid 85.0%, BM25 70.0% |
-| Single tool query, end to end | 5 to 7 seconds |
-| 11 servers connected, 504 tools aggregated | 0.7s |
-| Retrieval search, warm | 7ms |
-
-One result went against the design. I built the usual BM25 plus dense hybrid with reciprocal rank
-fusion, and measured it was **worse** than dense alone: BM25 added nothing, since all three score
-100% on lexical queries. RRF reads ranks, not scores, so a weak wrong match votes as hard as a
-strong right one. The default is dense now.
-
+| Single tool query, end-to-end | 5 to 7 seconds |
 
 ## Future Work
 
