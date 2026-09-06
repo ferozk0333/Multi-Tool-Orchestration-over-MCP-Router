@@ -5,76 +5,28 @@ In this project, I orchestrate 504 tools across 11 custom MCP servers using dens
 <!-- TODO: screen recording of the trace running goes here, before any prose. -->
 
 ## How It Works
+The model starts each conversation with zero catalogue tools, plus two system tools: `request_more_tools` and `ask_clarification`. The agent calls the tools, chains them across MCP servers, asks user a question when the request is unclear, and asks for different tools when the retrieved ones are wrong.
+
+From there, every turn is the same decision:
+
+model
+ ├─ need tools?      -> router retrieves top 12 -> back to the model
+ ├─ need info?       -> ask the user -> wait
+ ├─ ready to act?    -> call tools -> results back to the model
+ └─ done?            -> answer
+
 <img width="686" height="841" alt="Screenshot 2026-09-06 at 1 19 17 PM" src="https://github.com/user-attachments/assets/26264cc6-84f1-4b6b-91dd-45e9022ce523" />
 
-The model starts each conversation with zero catalogue tools and two services: `request_more_tools` and `ask_clarification`.
 
+## Key Components
 
-**504 tools in the catalogue. 12 go to the model.**
-
-It also calls the tools, chains them across servers, asks you a question when the request is
-unclear, and asks for different tools when the retrieved ones are wrong.
-
-## Why routing
-
-Here is `mcp.json`, the same shape Claude Desktop uses:
-
-```json
-{
-  "mcpServers": {
-    "github": { "command": "python", "args": ["-m", "servers.github"] },
-    "slack":  { "command": "python", "args": ["-m", "servers.slack"] }
-  }
-}
-```
-
-Eleven of those gives 504 tools, which is 59,394 tokens of schemas. It fits in the context
-window, but you pay it on every call before the user has asked anything, and the model picks
-from 504 options instead of 12.
-
-
-
-**Router.** Not a model, just a local search index. Dense embeddings with `bge-small-en-v1.5`,
-about 7ms, no API cost.
+**Router.** It is not a model, just a search index. Dense embeddings search across tool schemas in about 7ms.
 
 **Agent loop.** The model starts with no tools. If it can answer from the conversation it just
-answers, and no retrieval happens. If it needs data it says what capability it needs, and the
-router fetches tools for that. Those tools stay loaded for the rest of the conversation.
+answers, and no retrieval happens. If it needs data, it says what capability it needs, and the
+router fetches tools for that.
 
-**Tool execution.** The pool holds all 11 servers over stdio, dispatches calls concurrently, and
-returns failures as data so the model can correct itself.
-
-## Recovering from a bad route
-
-Retrieval is not perfect, so what happens when the model gets the wrong twelve tools?
-
-The obvious fix is to widen the search when the model says it cannot help. But that only catches
-refusals, and models rarely refuse. Give one only Slack tools and ask a GitHub question, and it
-will call a Slack tool and report the useless result as an answer.
-
-So the model gets a tool called `request_more_tools`. It is in no server's catalogue and is never
-executed. Its only job is to let the model say "wrong toolbox" in its own words:
-
-```
-12 tools retrieved     slack 10 · github 2                       2.0k tokens
-slack   conversations_info                                            15 ms
-
-Wrong toolbox   widened 12 → 46
-  └ GitHub: list pull requests for a repository, open state, sorted by date
-
-46 tools retrieved     github 28 · slack 13 · twilio 2 · hr 1       6.8k tokens
-github  pulls_list                                                    12 ms
-slack   chat_post_message                                              4 ms
-```
-
-Two things that caught me out. Widening must only add tools: my first version re-ranked at a
-bigger `k` and dropped `slack_chat_post_message`, so the model found the PR and had nothing to
-post it with. And retrieving on what the model asks for beats retrieving on the raw question. For
-the query above `github_pulls_list` does not appear even at k=40, but comes back at rank 3 when
-searched on the model's own description.
-
-`ask_clarification` works the same way. Before it, I was checking whether the answer ended with a
-"?", which worked until a real question ended with ")".
+**Tool execution.** The pool holds all 11 servers over stdio and dispatches calls concurrently.
 
 ## Production concerns
 
@@ -103,15 +55,6 @@ One result went against the design. I built the usual BM25 plus dense hybrid wit
 fusion, and measured it was **worse** than dense alone: BM25 added nothing, since all three score
 100% on lexical queries. RRF reads ranks, not scores, so a weak wrong match votes as hard as a
 strong right one. The default is dense now.
-
-## Limitations
-
-The tools are mocked. The MCP protocol and the orchestration are real, the integrations are not.
-Schemas come from the actual GitHub, Slack, Stripe and Twilio OpenAPI specs, but responses come
-from seeded in-memory state.
-
-220 of the 504 tools are synthetic. The eval set is generated, 60 queries with 25% hand-checked.
-stdio transport only, and conversations are lost on restart.
 
 
 ## Future Work
