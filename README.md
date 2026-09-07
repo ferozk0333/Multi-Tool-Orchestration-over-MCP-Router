@@ -1,8 +1,11 @@
 # Multi-Tool Agentic Orchestration over MCP
 
-In this project, I orchestrate 504 tools across 11 custom MCP servers using dense embedding and BM25-based retrieval. Connect a few MCP servers and the tool count quickly outgrows the prompt. All 504 schemas are 60k tokens in context, which means higher latency, degraded selection accuracy and hallucinations. With retrieval, that drops to 1.8k tokens per query. The goal is to optimize correct tool retrieval keeping cost and latency at minimum.
+In this project, I orchestrate 504 tools across 11 custom MCP servers using dense embedding and BM25-based retrieval. Connect a few MCP servers and the tool count quickly outgrows the prompt. All 504 schemas are 60k tokens in context, which means higher latency, degraded selection accuracy and hallucinations. With retrieval, that drops to 1.8k tokens per query. The goal is to optimize correct tool retrieval keeping cost and latency at a minimum. 
 
-<!-- TODO: screen recording of the trace running goes here, before any prose. -->
+### Demo Walkthrough
+
+https://github.com/user-attachments/assets/16ed0f80-f4ac-428d-9c32-8d9d5c7877e8
+
 
 ## How It Works
 The model starts each conversation with zero catalogue tools, plus two system tools: `request_more_tools` and `ask_clarification`. The agent calls the tools, chains them across MCP servers, asks user a question when the request is unclear, and asks for different tools when the retrieved ones are wrong.
