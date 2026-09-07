@@ -7,7 +7,7 @@ In this project, I orchestrate 504 tools across 11 custom MCP servers using dens
 https://github.com/user-attachments/assets/16ed0f80-f4ac-428d-9c32-8d9d5c7877e8
 
 
-## How It Works
+## Agent Architecture
 The model starts each conversation with zero catalogue tools, plus two system tools: `request_more_tools` and `ask_clarification`. The agent calls the tools, chains them across MCP servers, asks user a question when the request is unclear, and asks for different tools when the retrieved ones are wrong.
 
 From there, every turn is the same decision:
